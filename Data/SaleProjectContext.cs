@@ -9,11 +9,13 @@ namespace SaleProject.Data
 {
     public class SaleProjectContext : DbContext
     {
-        public SaleProjectContext (DbContextOptions<SaleProjectContext> options)
+        public SaleProjectContext(DbContextOptions<SaleProjectContext> options)
             : base(options)
         {
         }
 
-        public DbSet<SaleProject.Models.Department> Department { get; set; } = default!;
+        public DbSet<Department> Department { get; set; } // = default!;
+        public DbSet<Seller> Seller { get; set; }
+        public DbSet<SalesRecord> SalesRecords { get; set; }
     }
 }
