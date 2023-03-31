@@ -11,12 +11,17 @@ namespace SaleProject.Services
         public SellerService(SaleProjectContext context)
         {
             _context = context;
-            
         }
         
         public List<Seller> GetSellerList()
         {
             return _context.Seller.ToList();
+        }
+
+        public void Insert(Seller insertSeller)
+        {
+            _context.Add(insertSeller);
+            _context.SaveChanges();
         }
     }
 }
