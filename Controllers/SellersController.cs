@@ -25,7 +25,7 @@ namespace SaleProject.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Create([Bind("Id,Name,Email,BirthDate,BaseSalary")] Seller seller)
+		public IActionResult Create(Seller seller)
 		{
 			_sellerService.Insert(seller);
 			return RedirectToAction(nameof(Index));
