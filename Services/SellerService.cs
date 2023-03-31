@@ -20,6 +20,7 @@ namespace SaleProject.Services
 
         public void Insert(Seller insertSeller)
         {
+            insertSeller.Department = _context.Department.First();
             _context.Add(insertSeller);
             _context.SaveChanges();
         }
