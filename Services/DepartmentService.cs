@@ -1,4 +1,5 @@
 ﻿using SaleProject.Data;
+using SaleProject.Models;
 
 namespace SaleProject.Services
 {
@@ -9,6 +10,11 @@ namespace SaleProject.Services
 		public DepartmentService(SaleProjectContext context)
 		{
 			_context = context;
+		}
+
+		public List<Department> FindAll()
+		{
+			return _context.Department.OrderBy(x => x.Name).ToList();
 		}
 	}
 }
