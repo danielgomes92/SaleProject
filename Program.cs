@@ -12,6 +12,7 @@ builder.Services.AddDbContext<SaleProjectContext>(options =>
 // Register of services to Dependency Injection system.
 builder.Services.AddScoped<SeedingService>();
 builder.Services.AddScoped<SellerService>();
+builder.Services.AddScoped<DepartmentService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

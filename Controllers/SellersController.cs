@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SaleProject.Models;
+using SaleProject.Models.ViewModels;
 using SaleProject.Services;
 
 namespace SaleProject.Controllers
@@ -8,9 +9,11 @@ namespace SaleProject.Controllers
 	public class SellersController : Controller
 	{
 		private readonly SellerService _sellerService;
-		public SellersController(SellerService sellerService)
+		private readonly DepartmentService _departmentService;
+		public SellersController(SellerService sellerService, DepartmentService departmentService)
 		{
 			_sellerService = sellerService;
+			_departmentService = departmentService;
 		}
 
 		public IActionResult Index()
@@ -20,6 +23,8 @@ namespace SaleProject.Controllers
 		}
 		public IActionResult Create()
 		{
+			var departments = _departmentService.FindAll();
+			var viewModel = new SellerFormViewModel { Departments = departments };
 			return View();
 		}
 
