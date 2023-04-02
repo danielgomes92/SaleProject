@@ -1,4 +1,5 @@
-﻿using SaleProject.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SaleProject.Data;
 using SaleProject.Models;
 using System.Security.Policy;
 
@@ -12,7 +13,7 @@ namespace SaleProject.Services
         {
             _context = context;
         }
-        
+
         public List<Seller> GetSellerList()
         {
             return _context.Seller.ToList();
@@ -28,7 +29,7 @@ namespace SaleProject.Services
 
         public Seller FindById(int id)
         {
-            return _context.Seller.FirstOrDefault(obj => obj.Id == id);
+            return _context.Seller.Include(obj => obj.Department).FirstOrDefault(obj => obj.Id == id);
         }
 
         public void Remove(int id)
