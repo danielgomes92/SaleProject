@@ -25,7 +25,7 @@ namespace SaleProject.Controllers
 		{
 			var departments = _departmentService.FindAll();
 			var viewModel = new SellerFormViewModel { Departments = departments };
-			return View();
+			return View(viewModel);
 		}
 
 		[HttpPost]
