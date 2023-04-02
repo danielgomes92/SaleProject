@@ -21,7 +21,7 @@ namespace SaleProject.Services
         public void Insert(Seller insertSeller)
         {
             // To fix Referencial Integrity EF
-            insertSeller.Department = _context.Department.First();
+            // insertSeller.Department = _context.Department.First();  DO NOT NEED, IS INSTANCED
             _context.Add(insertSeller);
             _context.SaveChanges();
         }
