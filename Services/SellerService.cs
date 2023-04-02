@@ -34,7 +34,7 @@ namespace SaleProject.Services
         public void Remove(int id)
         {
             var obj = _context.Seller.Find(id);
-            _context.Remove(obj);
+            _context.Seller.Remove(obj);
             _context.SaveChanges();
         }
     }
