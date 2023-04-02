@@ -57,5 +57,19 @@ namespace SaleProject.Controllers
 			_sellerService.Remove(id);
 			return RedirectToAction(nameof(Index));
 		}
+
+		public IActionResult Details(int? id)
+		{
+            if (id == null)
+            {
+                return NotFound("This ID doesnt exist in database");
+            }
+            var obj = _sellerService.FindById(id.Value);
+            if (obj == null)
+            {
+                return NotFound(404);
+            }
+			return View(obj);
+        }
 	}
 }
