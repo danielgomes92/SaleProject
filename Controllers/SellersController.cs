@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SaleProject.Models;
 using SaleProject.Models.ViewModels;
 using SaleProject.Services;
+using SaleProject.Services.Exceptions;
 
 namespace SaleProject.Controllers
 {
@@ -25,7 +26,7 @@ namespace SaleProject.Controllers
 		{
 			var departments = _departmentService.FindAll();
 			var viewModel = new SellerFormViewModel { Departments = departments };
-			return View();
+			return View(viewModel);
 		}
 
 		[HttpPost]
@@ -34,6 +35,84 @@ namespace SaleProject.Controllers
 		{
 			_sellerService.Insert(seller);
 			return RedirectToAction(nameof(Index));
+		}
+
+		public IActionResult Delete(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound("This ID doesnt exist in database");
+			}
+			var obj = _sellerService.FindById(id.Value);
+			if (obj == null)
+			{
+				return NotFound(404);
+			}
+
+			return View(obj);
+		}
+
+		[HttpPost]
+		public IActionResult Delete(int id)
+		{
+			_sellerService.Remove(id);
+			return RedirectToAction(nameof(Index));
+		}
+
+		public IActionResult Details(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound("This ID doesnt exist in database");
+			}
+			var obj = _sellerService.FindById(id.Value);
+			if (obj == null)
+			{
+				return NotFound(404);
+			}
+			return View(obj);
+		}
+
+		public IActionResult Edit(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound("this id doesnt exist in database");
+			}
+
+			var obj = _sellerService.FindById(id.Value);
+			if (obj == null)
+			{
+				return NotFound("this id doesnt exist in database");
+			}
+
+			List<Department> departments = _departmentService.FindAll();
+			SellerFormViewModel viewModel = new SellerFormViewModel { Seller = obj, Departments = departments };
+
+			return View(viewModel);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Edit(int id, Seller seller)
+		{
+			if (id != seller.Id)
+			{
+				return BadRequest("what the fuc is that");
+			}
+			try
+			{
+				_sellerService.Update(seller);
+				return RedirectToAction(nameof(Index));
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (DbCurrencyException)
+			{
+				return BadRequest();
+			}
 		}
 	}
 }
