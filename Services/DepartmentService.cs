@@ -1,20 +1,21 @@
-﻿using SaleProject.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SaleProject.Data;
 using SaleProject.Models;
 
 namespace SaleProject.Services
 {
 	public class DepartmentService
 	{
-		private SaleProjectContext _context;
+		private readonly SaleProjectContext _context;
 
 		public DepartmentService(SaleProjectContext context)
 		{
 			_context = context;
 		}
 
-		public List<Department> FindAll()
+		public async Task<List<Department>> FindAllAsync()
 		{
-			return _context.Department.OrderBy(x => x.Name).ToList();
+			return await _context.Department.OrderBy(x => x.Name).ToListAsync();
 		}
 	}
 }
