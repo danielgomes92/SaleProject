@@ -6,7 +6,7 @@ namespace SaleProject.Services
 {
 	public class DepartmentService
 	{
-		private SaleProjectContext _context;
+		private readonly SaleProjectContext _context;
 
 		public DepartmentService(SaleProjectContext context)
 		{
